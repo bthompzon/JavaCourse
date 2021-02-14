@@ -1,17 +1,31 @@
 package vehicle;
 
-public class Vehicle implements Comparable<Vehicle>{
+import vehicle.strategypattern.Driver;
+
+import java.util.Comparator;
+
+public abstract class Vehicle implements Comparable<Vehicle>{
     private final Color color;
     private int fuelLevel;
     private Manufacture manufacture;
     private final String model;
     private final int numSeats;
     private double price;
+    protected Driver driver; // M3 USING STRATEGY
 
     public static final Color DEFAULT_COLOR = Color.RACING_RED;
     public static final int MIN_FUEL_LEVEL = 0;
     public static final int MAX_FUEL_LEVEL = 100;
-    public static int TOTAL_NUM_VEHICLES = 0; // M2 HOMEWORK STATIC
+    public static int TOTAL_NUM_VEHICLES = 0;
+
+    public final static Comparator PRICE_COMPARATOR = new VehiclePriceComparator();
+
+    private static class VehiclePriceComparator implements Comparator<Vehicle> {
+        @Override
+        public int compare(Vehicle v1, Vehicle v2) {
+            return Double.compare(v1.price, v2.price);
+        }
+    }
 
     /**
      * Constructor used to create vechicles
@@ -22,23 +36,24 @@ public class Vehicle implements Comparable<Vehicle>{
      * @param numSeats - number of seats in vehicle
      * @param price - price of vehicle
      */
-    public Vehicle(Color color, int fuelLevel, Manufacture manufacture, String model, int numSeats, double price) {
+    public Vehicle(Color color, int fuelLevel, Manufacture manufacture, String model, int numSeats, double price, Driver driver) {
         this.color = color;
         this.fuelLevel = fuelLevel;
         this.manufacture = manufacture;
         this.model = model;
         this.numSeats = numSeats;
         this.price = price;
+        this.driver = driver;
         Vehicle.TOTAL_NUM_VEHICLES++;
     }
 
     /**
-     * @see Vehicle#Vehicle(Color, int, Manufacture, String, int, double)
+     * @see Vehicle#Vehicle(Color, int, Manufacture, String, int, double, Driver driver)
      * Default values provided for color and fuelLevel
      *
      */
-    public Vehicle(Manufacture manufacture, String model, int numSeats, double price) {
-        this(DEFAULT_COLOR, MAX_FUEL_LEVEL, manufacture, model, numSeats, price);
+    public Vehicle(Manufacture manufacture, String model, int numSeats, double price, Driver driver) {
+        this(DEFAULT_COLOR, MAX_FUEL_LEVEL, manufacture, model, numSeats, price, driver);
     }
 
     public Color getColor() {
@@ -75,7 +90,7 @@ public class Vehicle implements Comparable<Vehicle>{
         return price;
     }
 
-    public static int getTotalNumVehicles() { // M2 HOMEWORK STATIC
+    public static int getTotalNumVehicles() {
         return Vehicle.TOTAL_NUM_VEHICLES;
     }
 
@@ -88,7 +103,7 @@ public class Vehicle implements Comparable<Vehicle>{
     @Override
     public String toString() {
         return String.format("Manufacture: %s\tModel: %s\nColor: %s\tPrice: %s\nSeating Capacity: %s",
-                manufacture, model, color + " " + color.getPaintCode(), price, numSeats); // M2 HOMEWORK ENUM USE
+                manufacture, model, color + " " + color.getPaintCode(), price, numSeats);
     }
 
     @Override
@@ -114,6 +129,11 @@ public class Vehicle implements Comparable<Vehicle>{
 
     public void start() {
         System.out.println("Starting vehicle");
+    }
+
+
+    public void drive() {
+        driver.drive(); // M3 USING STRATEGY
     }
 
     public void stop() {

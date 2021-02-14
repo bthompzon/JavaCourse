@@ -1,5 +1,7 @@
 package vehicle;
 
+import vehicle.strategypattern.HydrogenDriver;
+
 public class HydrogenVehicle extends Vehicle {
     private final String hydrogenVehicleFuelCellType;
 
@@ -10,7 +12,7 @@ public class HydrogenVehicle extends Vehicle {
      */
     public HydrogenVehicle(Color color, int fuelLevel, Manufacture manufacture, String model, int numSeats,
                            double price, String hydrogenVehicleFuelCellType) {
-        super(color, fuelLevel, manufacture, model, numSeats, price);
+        super(color, fuelLevel, manufacture, model, numSeats, price, new HydrogenDriver());
         this.hydrogenVehicleFuelCellType = hydrogenVehicleFuelCellType;
     }
 
@@ -20,6 +22,10 @@ public class HydrogenVehicle extends Vehicle {
     public HydrogenVehicle(Manufacture manufacture, String model, int numSeats, double price,
                            String hydrogenVehicleFuelCellType) {
         this(DEFAULT_COLOR, MAX_FUEL_LEVEL, manufacture, model, numSeats, price, hydrogenVehicleFuelCellType);
+    }
+
+    public HydrogenVehicle(Manufacture manufacture, String model, int numSeats, double price) {
+        this(manufacture, model, numSeats, price, "unknown");
     }
 
     public String getHydrogenVehicleFuelCellType() {

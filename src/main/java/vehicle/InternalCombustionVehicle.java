@@ -1,5 +1,7 @@
 package vehicle;
 
+import vehicle.strategypattern.CombustionDriver;
+
 public class InternalCombustionVehicle extends Vehicle {
     private final int numberOfCylinders;
     private final String engineDisplacement;
@@ -12,7 +14,7 @@ public class InternalCombustionVehicle extends Vehicle {
      */
     public InternalCombustionVehicle(Color color, int fuelLevel, Manufacture manufacture, String model,
                                      int numSeats, double price, int numberOfCylinders, String engineDisplacement) {
-        super(color, fuelLevel, manufacture, model, numSeats, price);
+        super(color, fuelLevel, manufacture, model, numSeats, price, new CombustionDriver());
         this.numberOfCylinders = numberOfCylinders;
         this.engineDisplacement = engineDisplacement;
     }
@@ -23,6 +25,10 @@ public class InternalCombustionVehicle extends Vehicle {
     public InternalCombustionVehicle(Manufacture manufacture, String model, int numSeats, double price,
                                      int numberOfCylinders, String engineDisplacement) {
         this(DEFAULT_COLOR, MAX_FUEL_LEVEL, manufacture, model, numSeats, price, numberOfCylinders, engineDisplacement);
+    }
+
+    public InternalCombustionVehicle(Manufacture manufacture, String model, int numSeats, double price) {
+        this(manufacture, model, numSeats, price, -1, "");
     }
 
     public int getNumberOfCylinders() {
