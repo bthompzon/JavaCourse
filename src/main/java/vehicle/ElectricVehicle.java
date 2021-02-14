@@ -1,5 +1,7 @@
 package vehicle;
 
+import vehicle.strategypattern.ElectricDriver;
+
 public class ElectricVehicle extends Vehicle {
     private String batteryType;
     private final int numMotors;
@@ -12,7 +14,7 @@ public class ElectricVehicle extends Vehicle {
      */
     public ElectricVehicle(Color color, int fuelLevel, Manufacture manufacture, String model, int numSeats,
                            double price, String batteryType, int numMotors) {
-        super(color, fuelLevel, manufacture, model, numSeats, price);
+        super(color, fuelLevel, manufacture, model, numSeats, price, new ElectricDriver());
         this.batteryType = batteryType;
         this.numMotors = numMotors;
     }
@@ -23,6 +25,10 @@ public class ElectricVehicle extends Vehicle {
     public ElectricVehicle(Manufacture manufacture, String model, int numSeats, double price, String batteryType,
                            int numMotors) {
         this(DEFAULT_COLOR, MAX_FUEL_LEVEL, manufacture, model, numSeats, price, batteryType, numMotors);
+    }
+
+    public ElectricVehicle(Manufacture manufacture, String model, int numSeats, double price) {
+        this(manufacture, model, numSeats, price, "", 1);
     }
 
     public String getBatteryType() {
@@ -55,7 +61,7 @@ public class ElectricVehicle extends Vehicle {
     }
 
     public void enabledAutoPilot() {
-        System.out.println("Enabling autopilot. Good luck!\n");
+        System.out.println("Enabling autopilot. Good luck!");
     }
 
     public boolean openTrunkRemotely() {
