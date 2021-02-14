@@ -55,7 +55,7 @@ public class ElectricVehicle extends Vehicle {
     }
 
     public void enabledAutoPilot() {
-        System.out.println("Enabling autopilot. Good luck!");
+        System.out.println("Enabling autopilot. Good luck!\n");
     }
 
     public boolean openTrunkRemotely() {

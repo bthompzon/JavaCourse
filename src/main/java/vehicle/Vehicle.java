@@ -1,6 +1,6 @@
 package vehicle;
 
-public class Vehicle {
+public class Vehicle implements Comparable<Vehicle>{
     private final Color color;
     private int fuelLevel;
     private Manufacture manufacture;
@@ -11,6 +11,7 @@ public class Vehicle {
     public static final Color DEFAULT_COLOR = Color.RACING_RED;
     public static final int MIN_FUEL_LEVEL = 0;
     public static final int MAX_FUEL_LEVEL = 100;
+    public static int TOTAL_NUM_VEHICLES = 0; // M2 HOMEWORK STATIC
 
     /**
      * Constructor used to create vechicles
@@ -28,6 +29,7 @@ public class Vehicle {
         this.model = model;
         this.numSeats = numSeats;
         this.price = price;
+        Vehicle.TOTAL_NUM_VEHICLES++;
     }
 
     /**
@@ -73,6 +75,10 @@ public class Vehicle {
         return price;
     }
 
+    public static int getTotalNumVehicles() { // M2 HOMEWORK STATIC
+        return Vehicle.TOTAL_NUM_VEHICLES;
+    }
+
     public void setPrice(double price) {
         if (price > 0) {
             this.price = price;
@@ -82,7 +88,7 @@ public class Vehicle {
     @Override
     public String toString() {
         return String.format("Manufacture: %s\tModel: %s\nColor: %s\tPrice: %s\nSeating Capacity: %s",
-                manufacture, model, color, price, numSeats);
+                manufacture, model, color + " " + color.getPaintCode(), price, numSeats); // M2 HOMEWORK ENUM USE
     }
 
     @Override
@@ -112,5 +118,10 @@ public class Vehicle {
 
     public void stop() {
         System.out.println("Turning off vehicle");
+    }
+
+    @Override
+    public int compareTo(Vehicle o) {
+        return model.compareTo(o.model);
     }
 }

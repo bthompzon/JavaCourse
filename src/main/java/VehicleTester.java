@@ -2,6 +2,7 @@
 import vehicle.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class VehicleTester {
@@ -32,5 +33,13 @@ public class VehicleTester {
                 ev.enabledAutoPilot();
             }
         }
+
+        System.out.println("\nUnsorted fleet of vehicles:");
+        fleet.stream().forEach(vehicle -> System.out.println("model: " + vehicle.getModel()));
+
+        Collections.sort(fleet); // M2 HOMEWORK STATIC
+
+        System.out.println("\nSorted fleet of vehicles");
+        fleet.stream().forEach(vehicle -> System.out.println("model: " + vehicle.getModel()));
     }
 }
